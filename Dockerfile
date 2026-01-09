@@ -43,6 +43,7 @@ COPY docker/tinode/config.template .
 COPY docker/tinode/entrypoint.sh .
 COPY tinode-db/credentials.sh .
 COPY tinode-db/data.json .
+COPY tinode-db/*.jpg .
 COPY server/templ ./templ
 
 # Create empty static directory
