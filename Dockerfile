@@ -46,8 +46,8 @@ COPY tinode-db/data.json .
 COPY tinode-db/*.jpg .
 COPY server/templ ./templ
 
-# Create empty static directory
-RUN mkdir -p ./static
+# Copy webapp static files
+COPY server/static ./static
 
 # Environment variables
 ENV WAIT_FOR=
