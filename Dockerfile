@@ -42,7 +42,7 @@ COPY --from=builder /go/bin/keygen ./keygen
 # Copy config and static files
 COPY docker/tinode/config.template .
 COPY docker/tinode/entrypoint.sh .
-COPY docker/tinode/credentials.sh .
+COPY tinode-db/credentials.sh .
 COPY tinode-db/data.json .
 COPY server/templ ./templ
 
