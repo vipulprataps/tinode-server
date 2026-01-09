@@ -22,6 +22,7 @@ RUN go build -o /go/bin/keygen ./keygen
 FROM alpine:3.22
 
 ARG TARGET_DB=mysql
+ARG WEBAPP_VERSION=0.23.6
 ENV TARGET_DB=$TARGET_DB
 
 LABEL maintainer="Tinode Team <info@tinode.co>"
@@ -29,7 +30,7 @@ LABEL name="TinodeChatServer"
 
 # Install runtime dependencies
 RUN apk update && \
-    apk add --no-cache ca-certificates bash grep netcat-openbsd
+    apk add --no-cache ca-certificates bash grep netcat-openbsd curl
 
 WORKDIR /opt/tinode
 
@@ -44,7 +45,12 @@ COPY docker/tinode/entrypoint.sh .
 COPY docker/tinode/credentials.sh .
 COPY tinode-db/data.json .
 COPY server/templ ./templ
-COPY server/static ./static
+
+# Download and extract the webapp
+RUN mkdir -p ./static && \
+    curl -L "https://github.com/tinode/webapp/releases/download/v${WEBAPP_VERSION}/tinode-web.tar.gz" -o tinode-web.tar.gz && \
+    tar -xzf tinode-web.tar.gz -C ./static --strip-components=1 && \
+    rm tinode-web.tar.gz
 
 # Environment variables (same as original)
 ENV WAIT_FOR=
