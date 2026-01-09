@@ -22,7 +22,6 @@ RUN go build -o /go/bin/keygen ./keygen
 FROM alpine:3.22
 
 ARG TARGET_DB=mysql
-ARG WEBAPP_VERSION=0.25.1
 ENV TARGET_DB=$TARGET_DB
 
 LABEL maintainer="Tinode Team <info@tinode.co>"
@@ -30,7 +29,7 @@ LABEL name="TinodeChatServer"
 
 # Install runtime dependencies
 RUN apk update && \
-    apk add --no-cache ca-certificates bash grep netcat-openbsd curl
+    apk add --no-cache ca-certificates bash grep netcat-openbsd
 
 WORKDIR /opt/tinode
 
@@ -46,11 +45,10 @@ COPY tinode-db/credentials.sh .
 COPY tinode-db/data.json .
 COPY server/templ ./templ
 
-# Download and extract the webapp
-RUN mkdir -p ./static && \
-    curl -L "https://github.com/tinode/webapp/releases/download/v${WEBAPP_VERSION}/tinode-web.tar.gz" -o tinode-web.tar.gz && \
-    tar -xzf tinode-web.tar.gz -C ./static --strip-components=1 && \
-    rm tinode-web.tar.gz
+# Create empty static directory (webapp is in separate repo: github.com/tinode/webapp)
+# The server works without it - it's just the API server
+# To add webapp, mount a volume with built webapp files to ./static
+RUN mkdir -p ./static
 
 # Environment variables (same as original)
 ENV WAIT_FOR=
