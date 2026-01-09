@@ -87,8 +87,7 @@
 			},
 			"mongodb": {
 				"database": "tinode",
-				"addresses": "mongodb",
-				"replica_set": "rs0"
+				"uri": "$MONGODB_URI"
 			}
 		}
 	},
