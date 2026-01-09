@@ -22,7 +22,7 @@ RUN go build -o /go/bin/keygen ./keygen
 FROM alpine:3.22
 
 ARG TARGET_DB=mysql
-ARG WEBAPP_VERSION=0.23.6
+ARG WEBAPP_VERSION=0.25.1
 ENV TARGET_DB=$TARGET_DB
 
 LABEL maintainer="Tinode Team <info@tinode.co>"
