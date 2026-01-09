@@ -25,7 +25,7 @@ LABEL version=$VERSION
 # Alternatively use one of: postgres mongodb rethinkdb for a corresponsing
 # DB backend or alldbs to build a generic Tinode docker image, for example:
 # `--build-arg TARGET_DB=postgres` to build for PostgreSQL.
-ARG TARGET_DB=mysql
+ARG TARGET_DB=mongodb
 ENV TARGET_DB=$TARGET_DB
 
 # Runtime options.

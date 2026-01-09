@@ -4,7 +4,7 @@
 FROM golang:1.24-alpine AS builder
 
 ARG VERSION=latest
-ARG TARGET_DB=mysql
+ARG TARGET_DB=mongodb
 
 RUN apk add --no-cache git
 
@@ -13,7 +13,7 @@ WORKDIR /go/src/github.com/tinode/chat
 # Copy source code
 COPY . .
 
-# Build the server and tinode-db with the specified database backend
+# Build the server and tinode-db with MongoDB backend
 RUN go build -tags ${TARGET_DB} -o /go/bin/tinode ./server
 RUN go build -tags ${TARGET_DB} -o /go/bin/init-db ./tinode-db
 RUN go build -o /go/bin/keygen ./keygen
@@ -21,7 +21,7 @@ RUN go build -o /go/bin/keygen ./keygen
 # Runtime stage
 FROM alpine:3.22
 
-ARG TARGET_DB=mysql
+ARG TARGET_DB=mongodb
 ENV TARGET_DB=$TARGET_DB
 
 LABEL maintainer="Tinode Team <info@tinode.co>"
@@ -45,20 +45,22 @@ COPY tinode-db/credentials.sh .
 COPY tinode-db/data.json .
 COPY server/templ ./templ
 
-# Create empty static directory (webapp is in separate repo: github.com/tinode/webapp)
-# The server works without it - it's just the API server
-# To add webapp, mount a volume with built webapp files to ./static
+# Create empty static directory
 RUN mkdir -p ./static
 
-# Environment variables (same as original)
+# Environment variables
 ENV WAIT_FOR=
 ENV RESET_DB=false
 ENV UPGRADE_DB=false
 ENV NO_DB_INIT=false
 ENV SAMPLE_DATA=data.json
 ENV DEFAULT_COUNTRY_CODE=US
-ENV MYSQL_DSN='root@tcp(mysql)/tinode?parseTime=true&collation=utf8mb4_0900_ai_ci'
-ENV POSTGRES_DSN='postgresql://postgres:postgres@localhost:5432/tinode?sslmode=disable&connect_timeout=10'
+
+# MongoDB configuration
+ENV MONGODB_URI='mongodb://localhost:27017/tinode?replicaSet=rs0'
+ENV MONGODB_DATABASE=tinode
+
+# Other environment variables
 ENV PLUGIN_PYTHON_CHAT_BOT_ENABLED=false
 ENV MEDIA_HANDLER=fs
 ENV FS_CORS_ORIGINS='["*"]'
@@ -98,7 +100,7 @@ ENV TNPG_AUTH_TOKEN=
 ENV TNPG_ORG=
 ENV WEBRTC_ENABLED=false
 ENV ICE_SERVERS_FILE=
-ENV STORE_USE_ADAPTER=$TARGET_DB
+ENV STORE_USE_ADAPTER=mongodb
 ENV SERVER_STATUS_PATH=''
 ENV ACC_GC_ENABLED=false
 
