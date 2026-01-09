@@ -14,8 +14,8 @@ WORKDIR /go/src/github.com/tinode/chat
 COPY . .
 
 # Build the server and tinode-db with the specified database backend
-RUN go build -tags ${TARGET_DB} -o /go/bin/server ./server
-RUN go build -tags ${TARGET_DB} -o /go/bin/tinode-db ./tinode-db
+RUN go build -tags ${TARGET_DB} -o /go/bin/tinode ./server
+RUN go build -tags ${TARGET_DB} -o /go/bin/init-db ./tinode-db
 RUN go build -o /go/bin/keygen ./keygen
 
 # Runtime stage
@@ -34,8 +34,8 @@ RUN apk update && \
 WORKDIR /opt/tinode
 
 # Copy binaries from builder
-COPY --from=builder /go/bin/server ./server
-COPY --from=builder /go/bin/tinode-db ./tinode-db
+COPY --from=builder /go/bin/tinode ./tinode
+COPY --from=builder /go/bin/init-db ./init-db
 COPY --from=builder /go/bin/keygen ./keygen
 
 # Copy config and static files
