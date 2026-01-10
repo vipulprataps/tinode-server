@@ -77,10 +77,10 @@ func largeFileServeHTTP(wrt http.ResponseWriter, req *http.Request) {
 	}
 
 	// Check for API key presence
-	if isValid, _ := checkAPIKey(getAPIKey(req)); !isValid {
-		writeHttpResponse(ErrAPIKeyRequired(now), errors.New("invalid or missing API key"))
-		return
-	}
+	// if isValid, _ := checkAPIKey(getAPIKey(req)); !isValid {
+	// 	writeHttpResponse(ErrAPIKeyRequired(now), errors.New("invalid or missing API key"))
+	// 	return
+	// }
 
 	// Check authorization: either auth information or SID must be present
 	authMethod, secret := getHttpAuth(req)
@@ -216,10 +216,10 @@ func largeFileReceiveHTTP(wrt http.ResponseWriter, req *http.Request) {
 	}
 
 	// Check for API key presence
-	if isValid, _ := checkAPIKey(getAPIKey(req)); !isValid {
-		writeHttpResponse(ErrAPIKeyRequired(now), nil)
-		return
-	}
+	// if isValid, _ := checkAPIKey(getAPIKey(req)); !isValid {
+	// 	writeHttpResponse(ErrAPIKeyRequired(now), nil)
+	// 	return
+	// }
 
 	msgID := req.FormValue("id")
 	// Check authorization: either auth information or SID must be present

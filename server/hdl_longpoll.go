@@ -132,11 +132,11 @@ func serveLongPoll(wrt http.ResponseWriter, req *http.Request) {
 
 	enc := json.NewEncoder(wrt)
 
-	if isValid, _ := checkAPIKey(getAPIKey(req)); !isValid {
-		wrt.WriteHeader(http.StatusForbidden)
-		enc.Encode(ErrAPIKeyRequired(now))
-		return
-	}
+	// if isValid, _ := checkAPIKey(getAPIKey(req)); !isValid {
+	// 	wrt.WriteHeader(http.StatusForbidden)
+	// 	enc.Encode(ErrAPIKeyRequired(now))
+	// 	return
+	// }
 
 	// TODO(gene): should it be configurable?
 	// Currently any domain is allowed to get data from the chat server
