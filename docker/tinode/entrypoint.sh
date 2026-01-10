@@ -124,7 +124,7 @@ init_stdout=./init-db-stdout.txt
 	1>${init_stdout}
 if [ $? -ne 0 ]; then
 	echo "./init-db failed. Quitting."
-	exit 1
+	# exit 1
 fi
 
 # If sample data was provided, try to find Tino password.
@@ -143,4 +143,5 @@ fi
 args=("--config=${CONFIG}" "--static_data=$STATIC_DIR" "--cluster_self=$CLUSTER_SELF" "--pprof_url=$PPROF_URL")
 
 # Run the tinode server.
-./tinode "${args[@]}" 2>> /var/log/tinode.log
+# ./tinode "${args[@]}" 2>> /var/log/tinode.log
+exec ./tinode "${args[@]}"
