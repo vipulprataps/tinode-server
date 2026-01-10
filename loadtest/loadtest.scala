@@ -16,7 +16,7 @@ class Loadtest extends TinodeBase {
   val feeder = csv(System.getProperty("accounts", "users.csv")).random
 
   val scn = scenario("WebSocket")
-    .exec(ws("Connect WS").connect("/v0/channels?apikey=AQEAAAABAAD_rAp4DJh05a1HAwFT3A6K"))
+    .exec(ws("Connect WS").connect("/v0/channels?apikey=NPj+1186XqMpNlmTyAN9irJfhcObzz6LmMLwMI7D1pU="))
     .exec(session => session.set("id", "tn-" + session.userId))
     .pause(1)
     .exec(hello)
@@ -66,7 +66,7 @@ class MeLoadtest extends TinodeBase {
   val password = System.getProperty("password", "user0123")
 
   val scn = scenario("WebSocket")
-    .exec(ws("Connect WS").connect("/v0/channels?apikey=AQEAAAABAAD_rAp4DJh05a1HAwFT3A6K"))
+    .exec(ws("Connect WS").connect("/v0/channels?apikey=NPj+1186XqMpNlmTyAN9irJfhcObzz6LmMLwMI7D1pU="))
     .exec(session => session.set("id", "tn-" + session.userId))
     .exec(session => session.set("username", username))
     .exec(session => session.set("password", password))
@@ -96,7 +96,7 @@ class SingleTopicLoadtest extends TinodeBase {
   val topic = System.getProperty("topic", "TOPIC_NAME")
 
   val scn = scenario("WebSocket")
-    .exec(ws("Connect WS").connect("/v0/channels?apikey=AQEAAAABAAD_rAp4DJh05a1HAwFT3A6K"))
+    .exec(ws("Connect WS").connect("/v0/channels?apikey=NPj+1186XqMpNlmTyAN9irJfhcObzz6LmMLwMI7D1pU="))
     .exec(session => session.set("id", "tn-" + session.userId))
     .pause(1)
     .exec(hello)
