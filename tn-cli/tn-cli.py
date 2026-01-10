@@ -1278,7 +1278,7 @@ if __name__ == '__main__':
     parser.add_argument('--login-cookie', action='store_true', help='read token from cookie file and use it for authentication')
     parser.add_argument('--no-login', action='store_true', help='do not login even if cookie file is present; default in non-interactive (scripted) mode')
     parser.add_argument('--no-cookie', action='store_true', help='do not save login cookie; default in non-interactive (scripted) mode')
-    parser.add_argument('--api-key', default='NPj+1186XqMpNlmTyAN9irJfhcObzz6LmMLwMI7D1pU=', help='API key for file uploads')
+    parser.add_argument('--api-key', default='AQEAAAABAAD_rAp4DJh05a1HAwFT3A6K', help='API key for file uploads')
     parser.add_argument('--load-macros', default='./macros.py', help='path to macro module to load')
     parser.add_argument('--version', action='store_true', help='print version')
     parser.add_argument('--verbose', action='store_true', help='log full JSON representation of all messages')
